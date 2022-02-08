@@ -10,7 +10,6 @@ const refs = {
   minutes: document.querySelector('[data-minutes]'),
   seconds: document.querySelector('[data-seconds]'),
 }
-const currentDate = (new Date().toLocaleDateString());
 
 const flatpickrOptions = {
   altInput: true,
@@ -21,9 +20,14 @@ const flatpickrOptions = {
   minDate: new Date().fp_incr(1),
 }
 
-flatpickr('#datetime-picker', flatpickrOptions);
-
 refs.button.disabled = true;
+const selectedDate = flatpickr('#datetime-picker', flatpickrOptions);
+selectedDate.config.onChange.push(function(){refs.button.disabled = false})
+
+console.log(selectedDate);
+// flatpickr.parseDate(dateStr, dateFormat);
+
+
 // const date = new Date();
 
 
