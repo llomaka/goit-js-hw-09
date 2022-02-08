@@ -1,5 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import Notiflix from 'notiflix';
 import '../css/02-timer.css';
 
 const refs = {
@@ -20,11 +21,50 @@ const flatpickrOptions = {
   minDate: new Date().fp_incr(1),
 }
 
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minDate: new Date().fp_incr(1),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    console.log(selectedDates[0]);
+  },
+};
+
 refs.button.disabled = true;
-const selectedDate = flatpickr('#datetime-picker', flatpickrOptions);
+const selectedDate = flatpickr('#datetime-picker', options);
 selectedDate.config.onChange.push(function(){refs.button.disabled = false})
 
 console.log(selectedDate);
+
+function convertMs(ms) {
+  // Number of milliseconds per unit of time
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  // Remaining days
+  const days = Math.floor(ms / day);
+  // Remaining hours
+  const hours = Math.floor((ms % day) / hour);
+  // Remaining minutes
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  // Remaining seconds
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+  return { days, hours, minutes, seconds };
+}
+
+//Напиши функцію addLeadingZero(value), яка використовує метод padStart() і перед рендерингом інтефрейсу форматує значення.
+
+//Якщо користувач вибрав дату в минулому, покажи window.alert() з текстом "Please choose a date in the future".
+
+//Для відображення повідомлень користувачеві, замість window.alert(), використовуй бібліотеку notiflix.
+
+
+
 // flatpickr.parseDate(dateStr, dateFormat);
 
 
