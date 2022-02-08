@@ -1,17 +1,29 @@
 import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
 import '../css/02-timer.css';
 
 const refs = {
-  input: document.querySelector('input'),
+  input: document.querySelector('#datetime-picker'),
   button: document.querySelector('button', '[data-start]'),
   days: document.querySelector('[data-days]'),
   hours: document.querySelector('[data-hours]'),
   minutes: document.querySelector('[data-minutes]'),
   seconds: document.querySelector('[data-seconds]'),
 }
+const currentDate = (new Date().toLocaleDateString());
 
+const flatpickrOptions = {
+  altInput: true,
+  altFormat: 'j F Y H:i',
+  enableTime: true,
+  time_24hr: true,
+  dateFormat: 'Y-m-d H:i',
+  minDate: new Date().fp_incr(1),
+}
 
-// flatpickr(element, {});
+flatpickr('#datetime-picker', flatpickrOptions);
+
+refs.button.disabled = true;
 // const date = new Date();
 
 

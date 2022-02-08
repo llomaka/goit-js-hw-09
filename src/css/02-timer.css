@@ -11,8 +11,7 @@ button {
   font-size: 20px;
 }
 
-button:active,
-button:hover {
+button:active {
   color: #ffffff;
   background-color: #020202;
 }
