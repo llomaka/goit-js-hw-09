@@ -26,13 +26,16 @@ function convertMs(ms) {
 
 
 let dateFSelected;
-const timerValue = {};
+let timerValue = {};
 const currentDate = new Date();
 const convertDateValues = function () {
   const selectedTime = dateFSelected.getTime();
   const currentTime = currentDate.getTime();
-  let timerValue = convertMs(selectedTime - currentTime);
-  console.log(timerValue);
+  timerValue = convertMs(selectedTime - currentTime);
+  refs.days.textContent = timerValue.days;
+  refs.hours.textContent = timerValue.hours;
+  refs.minutes.textContent = timerValue.minutes;
+  refs.seconds.textContent = timerValue.seconds;
 };
 
 const options = {
@@ -68,28 +71,3 @@ selectedDate.config.onChange.push(function () { refs.button.disabled = false });
 //Для відображення повідомлень користувачеві, замість window.alert(), використовуй бібліотеку notiflix.
 
 
-// flatpickr.parseDate(dateStr, dateFormat);
-// console.log(date.toString());
-const date = new Date();
-// console.log(date.getTime()); // 1624021654154
-// console.log("getDate(): ", date.getDate());
-// // Повертає місяць від 0 до 11
-// const month = date.getMonth() + 1;
-// console.log("getMonth(): ", month);
-// // Повертає рік з 4 цифр
-// console.log("getFullYear(): ", date.getFullYear());
-// // Повертає години
-// console.log("getHours(): ", date.getHours());
-// // Повертає хвилини
-// console.log("getMinutes(): ", date.getMinutes());
-// // Повертає секунди
-// console.log("getSeconds(): ", date.getSeconds());
-// date.setMinutes(50);
-// console.log("Date: ", date);
-// // "Sat Mar 16 2030 14:50:00 GMT+0200"
-// console.log(date.toTimeString());
-// // "14:25:00 GMT+0200 (Eastern European Standard Time)"
-// console.log(date.toISOString());
-// // "2030-03-16T12:25:00.000Z"
-// console.log(date.toLocaleString());
-// // "3/16/2030, 2:25:00 PM"
