@@ -27,7 +27,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     dateFSelected = selectedDates[0];
-    console.log(dateFSelected);
+    console.log(dateFSelected.toLocaleString());
   },
 };
 
@@ -63,7 +63,7 @@ refs.button.disabled = true;
 const selectedDate = flatpickr('#datetime-picker', options);
 selectedDate.config.onChange.push(function () { refs.button.disabled = false });
 
-console.log(selectedDate);
+// console.log(selectedDate);
 
 // console.log(addLeadingZero('3'));
 // window.alert('Please choose a date in the future');
