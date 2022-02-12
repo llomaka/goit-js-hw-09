@@ -40,7 +40,7 @@ const countdownTimer = function () {
 };
 const displayOnCountdown = () => {
   if (dateFSelected < (new Date())) {
-    console.log('Операция таймер успешно выполнена!');
+    Notify.success('Timer performed successfully!');
     clearInterval(countdownId);
     countdownId = null;
     return;
@@ -67,17 +67,14 @@ const selectDate = flatpickr('#datetime-picker', options);
 selectDate.config.onOpen.push(function () {
   if (countdownId) {
     selectDate.close();
-    return console.log('Timer is already performed! Wait for operation to complete.');
+    return Notify.failure('Timer is already performing! Wait for operation to complete.');
   }
 });
 selectDate.config.onClose.push(function () {
-  if (dateFSelected.getTime() < (new Date()).getTime()) {
-    return alert('Please choose a date in the future!');
+  if (dateFSelected < (new Date())) {
+    return Notify.failure('Please choose a date in the future!');
   }
   if (countdownId) return;
   refs.button.disabled = false;
-  convertDateValues();
   refs.button.addEventListener('click', countdownTimer, { once: true });
 });
-
-//Для відображення повідомлень користувачеві, замість window.alert(), використовуй бібліотеку notiflix.
