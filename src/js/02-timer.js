@@ -40,9 +40,10 @@ const countdownTimer = function () {
 };
 const displayOnCountdown = () => {
   if (dateFSelected < (new Date())) {
-    selectDate.clear();
     console.log('Операция таймер успешно выполнена!');
-    return clearInterval(countdownId);
+    clearInterval(countdownId);
+    countdownId = null;
+    return;
   }
   convertDateValues();
 };
@@ -61,31 +62,22 @@ function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
 
-const checkPastBelonging = function (dateValue) {
-  // if (dateValue)
-  return true;
-};
-
 refs.button.disabled = true;
 const selectDate = flatpickr('#datetime-picker', options);
 selectDate.config.onOpen.push(function () {
   if (countdownId) {
-    console.log(countdownId);
     selectDate.close();
-    return console.log('Операция таймер уже выполняется! Ожидайте завершения выполнения.');
+    return console.log('Timer is already performed! Wait for operation to complete.');
   }
 });
 selectDate.config.onClose.push(function () {
+  if (dateFSelected.getTime() < (new Date()).getTime()) {
+    return alert('Please choose a date in the future!');
+  }
   if (countdownId) return;
-  // console.log(selectedDates[0]);
   refs.button.disabled = false;
   convertDateValues();
   refs.button.addEventListener('click', countdownTimer, { once: true });
 });
 
-
-// window.alert('Please choose a date in the future');
-
 //Для відображення повідомлень користувачеві, замість window.alert(), використовуй бібліотеку notiflix.
-
-
