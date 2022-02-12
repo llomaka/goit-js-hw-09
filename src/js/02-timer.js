@@ -1,6 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import Notiflix from 'notiflix';
+import { Notify } from 'notiflix';
 import '../css/02-timer.css';
 
 const refs = {
@@ -40,7 +40,7 @@ const countdownTimer = function () {
 };
 const displayOnCountdown = () => {
   if (dateFSelected < (new Date())) {
-    Notify.success('Timer performed successfully!');
+    Notify.success('Timer performed successfully! Click X to close notification', {closeButton: true});
     clearInterval(countdownId);
     countdownId = null;
     return;
@@ -67,12 +67,12 @@ const selectDate = flatpickr('#datetime-picker', options);
 selectDate.config.onOpen.push(function () {
   if (countdownId) {
     selectDate.close();
-    return Notify.failure('Timer is already performing! Wait for operation to complete.');
+    return Notify.warning('Timer is already performing! Wait for operation to complete.', {showOnlyTheLastOne: true});
   }
 });
 selectDate.config.onClose.push(function () {
   if (dateFSelected < (new Date())) {
-    return Notify.failure('Please choose a date in the future!');
+    return Notify.failure('Please choose a date in the future!', {timeout: 5000});
   }
   if (countdownId) return;
   refs.button.disabled = false;
