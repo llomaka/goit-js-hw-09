@@ -24,18 +24,25 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-
 let dateFSelected;
+let countdownId;
 let timerValue = {};
-const currentDate = new Date();
 const convertDateValues = function () {
-  const selectedTime = dateFSelected.getTime();
-  const currentTime = currentDate.getTime();
-  timerValue = convertMs(selectedTime - currentTime);
+  timerValue = convertMs(dateFSelected.getTime() - (new Date()).getTime());
   refs.days.textContent = timerValue.days;
-  refs.hours.textContent = timerValue.hours;
-  refs.minutes.textContent = timerValue.minutes;
-  refs.seconds.textContent = timerValue.seconds;
+  refs.hours.textContent = addLeadingZero(String(timerValue.hours));
+  refs.minutes.textContent = addLeadingZero(String(timerValue.minutes));
+  refs.seconds.textContent = addLeadingZero(String(timerValue.seconds));
+};
+const countdownTimer = function () {
+  refs.button.disabled = true;
+  countdownId = setInterval(displayOnCountdown, 1000);
+};
+const displayOnCountdown = () => {
+  if (dateFSelected < (new Date())) {
+    return clearInterval(countdownId);
+  }
+  convertDateValues();
 };
 
 const options = {
@@ -60,12 +67,12 @@ const checkPastBelonging = function (dateValue) {
 
 refs.button.disabled = true;
 const selectedDate = flatpickr('#datetime-picker', options);
-selectedDate.config.onChange.push(function () { refs.button.disabled = false });
+selectedDate.config.onChange.push(function () {
+  refs.button.disabled = false;
+  refs.button.addEventListener('click', countdownTimer, {once: true});
+});
 
 
-// console.log(selectedDate);
-
-// console.log(addLeadingZero('3'));
 // window.alert('Please choose a date in the future');
 
 //Для відображення повідомлень користувачеві, замість window.alert(), використовуй бібліотеку notiflix.
