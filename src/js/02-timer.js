@@ -29,10 +29,10 @@ let countdownId;
 let timerValue = {};
 const convertDateValues = function () {
   timerValue = convertMs(dateFSelected.getTime() - (new Date()).getTime());
-  refs.days.textContent = timerValue.days;
-  refs.hours.textContent = addLeadingZero(String(timerValue.hours));
-  refs.minutes.textContent = addLeadingZero(String(timerValue.minutes));
-  refs.seconds.textContent = addLeadingZero(String(timerValue.seconds));
+  refs.days.textContent = timerValue.days.length > 2 ? timerValue.days : addLeadingZero(timerValue.days);
+  refs.hours.textContent = addLeadingZero(timerValue.hours);
+  refs.minutes.textContent = addLeadingZero(timerValue.minutes);
+  refs.seconds.textContent = addLeadingZero(timerValue.seconds);
 };
 const countdownTimer = function () {
   refs.button.disabled = true;
@@ -40,6 +40,8 @@ const countdownTimer = function () {
 };
 const displayOnCountdown = () => {
   if (dateFSelected < (new Date())) {
+    selectDate.clear();
+    console.log('Операция таймер успешно выполнена!');
     return clearInterval(countdownId);
   }
   convertDateValues();
@@ -52,12 +54,11 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     dateFSelected = selectedDates[0];
-    convertDateValues();
   },
 };
 
 function addLeadingZero(value) {
-  return value.padStart(2, '0');
+  return value.toString().padStart(2, '0');
 }
 
 const checkPastBelonging = function (dateValue) {
@@ -66,10 +67,20 @@ const checkPastBelonging = function (dateValue) {
 };
 
 refs.button.disabled = true;
-const selectedDate = flatpickr('#datetime-picker', options);
-selectedDate.config.onChange.push(function () {
+const selectDate = flatpickr('#datetime-picker', options);
+selectDate.config.onOpen.push(function () {
+  if (countdownId) {
+    console.log(countdownId);
+    selectDate.close();
+    return console.log('Операция таймер уже выполняется! Ожидайте завершения выполнения.');
+  }
+});
+selectDate.config.onClose.push(function () {
+  if (countdownId) return;
+  // console.log(selectedDates[0]);
   refs.button.disabled = false;
-  refs.button.addEventListener('click', countdownTimer, {once: true});
+  convertDateValues();
+  refs.button.addEventListener('click', countdownTimer, { once: true });
 });
 
 
