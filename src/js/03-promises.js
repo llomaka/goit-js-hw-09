@@ -11,12 +11,16 @@ const refs = {
 refs.button.addEventListener('click', onClick);
 
 function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
-  } else {
-    // Reject
-  }
+  return new Promise((resolve, reject) => {
+    const shouldResolve = Math.random() > 0.3;
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve(position);
+      } else {
+        reject(position);
+      }
+    }, delay);
+  });
 }
 
 function onClick(event) {
@@ -28,3 +32,11 @@ function onClick(event) {
 
   refs.form.reset();
 }
+
+createPromise(2, 1500)
+  .then(({ position, delay }) => {
+    Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  })
+  .catch(({ position, delay }) => {
+    Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+  });
