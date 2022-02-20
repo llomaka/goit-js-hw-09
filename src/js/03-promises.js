@@ -15,10 +15,11 @@ function createPromise(position, delay) {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        resolve(Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`));
+        resolve(Notify.success(`✅ Fulfilled promise ${position} in ${position*delay}ms`));
+      } else {
+        reject(Notify.failure(`❌ Rejected promise ${position} in ${position*delay}ms`));
       }
-      reject(Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`));
-    }, delay);
+    }, position*delay);
   });
 }
 
@@ -35,6 +36,6 @@ function onClick(event) {
       createPromise(i + 1, step);
     }
   }, firstDelayValue);
-  refs.form.reset();
+  // refs.form.reset();
 }
 
