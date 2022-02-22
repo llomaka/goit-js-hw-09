@@ -24,7 +24,7 @@ const onButtonsClick = function (event) {
     refs.stopButton.disabled = true;
     refs.startButton.disabled = false;
     clearInterval(refs.interval);
-    refs.body.style.backgroundColor = 'initial';
+    // refs.body.style.backgroundColor = 'initial';
     return;
   }
 };
