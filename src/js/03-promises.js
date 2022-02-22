@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix';
 
 const refs = {
-  form: document.forms[0],
+  form: document.querySelector('form'),
   delay: document.querySelector('form').elements.delay,
   step: document.querySelector('form').elements.step,
   amount: document.querySelector('form').elements.amount,
