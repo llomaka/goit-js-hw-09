@@ -36,6 +36,7 @@ const convertDateValues = function () {
 };
 const countdownTimer = function () {
   refs.button.disabled = true;
+  refs.input.disabled = true;
   countdownId = setInterval(displayOnCountdown, 1000);
 };
 const displayOnCountdown = () => {
