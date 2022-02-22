@@ -77,5 +77,6 @@ selectDate.config.onClose.push(function () {
   }
   if (countdownId) return;
   refs.button.disabled = false;
+  refs.input.disabled = false;
   refs.button.addEventListener('click', countdownTimer, { once: true });
 });
