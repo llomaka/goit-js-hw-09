@@ -38,6 +38,6 @@ function onClick(event) {
       j = firstDelayValue + step * i;
       createPromise(i + 1, j);
     }
-  // refs.form.reset();
+  refs.form.reset();
 }
 

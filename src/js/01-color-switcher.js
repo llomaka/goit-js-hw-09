@@ -12,22 +12,36 @@ const changeBodyColor = function () {
   refs.body.style.backgroundColor = getRandomHexColor();
 };
 
-const onButtonsClick = function (event) {
-  if (event.target.nodeName !== 'BUTTON') return;
-  if (event.target.dataset.hasOwnProperty('start')) {
+// const onButtonsClick = function (event) {
+//   if (event.target.nodeName !== 'BUTTON') return;
+//   if (event.target.dataset.hasOwnProperty('start')) {
+//     refs.stopButton.disabled = false;
+//     refs.startButton.disabled = true;
+//     refs.interval = setInterval(changeBodyColor, 1000);
+//     return;
+//   }
+//   if (event.target.dataset.hasOwnProperty('stop')) {
+//     refs.stopButton.disabled = true;
+//     refs.startButton.disabled = false;
+//     clearInterval(refs.interval);
+//     // refs.body.style.backgroundColor = 'initial';
+//     return;
+//   }
+// };
+
+const onStartButtonClick = function (event) {
     refs.stopButton.disabled = false;
     refs.startButton.disabled = true;
     refs.interval = setInterval(changeBodyColor, 1000);
-    return;
-  }
-  if (event.target.dataset.hasOwnProperty('stop')) {
+};
+
+const onStopButtonClick = function (event) {
     refs.stopButton.disabled = true;
     refs.startButton.disabled = false;
     clearInterval(refs.interval);
-    // refs.body.style.backgroundColor = 'initial';
-    return;
-  }
 };
 
 refs.stopButton.disabled = true;
-refs.body.addEventListener('click', onButtonsClick);
+refs.startButton.addEventListener('click', onStartButtonClick);
+refs.stopButton.addEventListener('click', onStopButtonClick);
+// refs.body.addEventListener('click', onButtonsClick);
