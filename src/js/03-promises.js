@@ -15,11 +15,13 @@ function createPromise(position, delay) {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        resolve(Notify.success(`✅ Fulfilled promise ${position} in ${position*delay}ms`));
+        console.log(position, delay);
+        resolve(Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`));
       } else {
-        reject(Notify.failure(`❌ Rejected promise ${position} in ${position*delay}ms`));
+        console.log(position, delay);
+        reject(Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`));
       }
-    }, position*delay);
+    }, delay);
   });
 }
 
@@ -28,14 +30,17 @@ function onClick(event) {
   if (refs.delay.value < 0 || refs.step.value < 0 || refs.amount.value < 0) {
     return Notify.failure('Enter positive values in mandatory fields: First delay, Delay step and Amount');
   }
-  const firstDelayValue = refs.delay.value;
-  const step = refs.step.value;
+  const firstDelayValue = Number(refs.delay.value);
+  const step = Number(refs.step.value);
   const amount = refs.amount.value;
-  setTimeout(() => {
-    for (let i = 0; i < amount; i += 1) {
-      createPromise(i + 1, step);
+  Notify.init({
+    timeout: 3000 + firstDelayValue + step,
+  });
+    for (let i = 0, j; i < amount; i += 1) {
+      j = firstDelayValue + step * i;
+      console.log(j);
+      createPromise(i + 1, j);
     }
-  }, firstDelayValue);
   // refs.form.reset();
 }
 
