@@ -43,6 +43,8 @@ const displayOnCountdown = () => {
   if (dateFSelected < (new Date())) {
     Notify.success('Timer performed successfully! Click X to close notification', {closeButton: true});
     clearInterval(countdownId);
+    refs.button.disabled = false;
+    refs.input.disabled = false;
     countdownId = null;
     return;
   }
@@ -77,6 +79,5 @@ selectDate.config.onClose.push(function () {
   }
   if (countdownId) return;
   refs.button.disabled = false;
-  refs.input.disabled = false;
   refs.button.addEventListener('click', countdownTimer, { once: true });
 });
