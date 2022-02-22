@@ -15,10 +15,8 @@ function createPromise(position, delay) {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
-        console.log(position, delay);
         resolve(Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`));
       } else {
-        console.log(position, delay);
         reject(Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`));
       }
     }, delay);
@@ -38,7 +36,6 @@ function onClick(event) {
   });
     for (let i = 0, j; i < amount; i += 1) {
       j = firstDelayValue + step * i;
-      console.log(j);
       createPromise(i + 1, j);
     }
   // refs.form.reset();
