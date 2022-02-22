@@ -2,9 +2,9 @@ import { Notify } from 'notiflix';
 
 const refs = {
   form: document.forms[0],
-  delay: document.forms[0].delay,
-  step: document.forms[0].step,
-  amount: document.forms[0].amount,
+  delay: document.querySelector('form').elements.delay,
+  step: document.querySelector('form').elements.step,
+  amount: document.querySelector('form').elements.amount,
   button: document.querySelector('button'),
 }
 
@@ -40,4 +40,3 @@ function onClick(event) {
     }
   refs.form.reset();
 }
-
